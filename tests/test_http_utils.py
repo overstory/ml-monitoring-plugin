@@ -18,9 +18,10 @@
 #
 
 # working directory=tests
-import unittest
 import logging
-from newrelic_marklogic_plugin.http_utils import HTTPUtil
+import unittest
+
+from mlmonitor.core.http_utils import HTTPUtil
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)

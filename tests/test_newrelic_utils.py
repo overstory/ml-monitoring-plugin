@@ -17,9 +17,10 @@
 # limitations under the License.
 #
 
-import unittest
 import logging
-from newrelic_marklogic_plugin.newrelic_utils import NewRelicUtility
+import unittest
+
+from mlmonitor.core.newrelic.newrelic_utils import NewRelicUtility
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)

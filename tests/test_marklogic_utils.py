@@ -18,9 +18,10 @@
 #
 
 # working directory=tests
+import logging
 import unittest
-import logging, sys
-from newrelic_marklogic_plugin.marklogic_status import MarkLogicStatus
+
+from newrelic_marklogic_plugin import MarkLogicStatus
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)

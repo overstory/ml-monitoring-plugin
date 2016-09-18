@@ -17,9 +17,11 @@
 # limitations under the License.
 #
 
+import logging
+import sys
 import unittest
-import logging, sys
 from StringIO import StringIO
+
 import newrelic_marklogic_plugin
 
 log = logging.getLogger()
@@ -50,4 +52,4 @@ class PluginTests(unittest.TestCase):
                                                    confFile='etc/newrelic_marklogic.conf.sample')
         nrml.usage()
         self.assertEqual(sys.stdout.getvalue().strip(),
-                         'newrelic_marklogic v'+newrelic_marklogic_plugin.__version__+' - NewRelic plugin for monitoring MarkLogic.\n\nusage: ./newrelic_marklogic.py [-h] [-c config file] [-l log file]\n\n    -h print usage instructions  (this message)\n    -c config file               (default: newrelic_marklogic.conf)\n    -l log file                  (default: newrelic_marklogic.log)')
+                         'newrelic_marklogic v' + newrelic_marklogic_plugin.__version__ + ' - NewRelic plugin for monitoring MarkLogic.\n\nusage: ./newrelic_marklogic.py [-h] [-c config file] [-l log file]\n\n    -h print usage instructions  (this message)\n    -c config file               (default: newrelic_marklogic.conf)\n    -l log file                  (default: newrelic_marklogic.log)')

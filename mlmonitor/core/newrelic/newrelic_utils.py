@@ -29,7 +29,7 @@ import json
 import logging
 import __init__
 
-from newrelic_marklogic_plugin.http_utils import HTTPUtil
+from mlmonitor.core.http_utils import HTTPUtil
 
 log = logging.getLogger(__name__)
 

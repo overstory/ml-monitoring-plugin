@@ -22,18 +22,16 @@ __init__.py module entry point for running plugin
 
 """
 
+import ConfigParser  # TBD- python 3.5 does not have this module
 import json
+import logging
 import re
 import sys
 import time
-import logging
 
-import ConfigParser  # TBD- python 3.5 does not have this module
+from mlmonitor.core.marklogic_status import MarkLogicStatus
+from mlmonitor.core.newrelic import newrelic_utils
 
-import newrelic_utils
-from marklogic_status import MarkLogicStatus
-
-__version__ = '0.2.2'
 
 
 decl = {
