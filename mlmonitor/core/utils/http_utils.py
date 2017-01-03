@@ -81,7 +81,7 @@ class HTTPUtil:
     @staticmethod
     def http_post(scheme=None, host=None, port=None, path=None, user=None, passwd=None, realm=None, auth=None, url=None,
                   headers={'Accept': 'application/json'}, format="json", payload=None, proxy=None):
-        log.debug("execute http post call")
+        log.info("execute http post call")
         try:
             if url:
                 requrl = url
