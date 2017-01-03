@@ -28,7 +28,7 @@ import requests
 import sys
 from requests.auth import HTTPDigestAuth, HTTPBasicAuth
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('cement:app:mlmonitor')
 
 
 class HTTPUtil:

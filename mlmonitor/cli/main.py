@@ -1,8 +1,9 @@
 """MarkLogic Monitoring Plugin main application entry point."""
-
-from cement.core.foundation import CementApp
-from cement.utils.misc import init_defaults
 from cement.core.exc import FrameworkError, CaughtSignal
+from cement.core.foundation import CementApp
+from cement.ext.ext_logging import LoggingLogHandler
+from cement.utils.misc import init_defaults
+
 from mlmonitor.core import exc
 
 # Application default.  Should update config/mlmonitor.conf to reflect any
@@ -18,11 +19,33 @@ defaults['mlmonitor']['plugin_dir'] = '/var/lib/mlmonitor/plugins'
 # External templates (generally, do not ship with application code)
 defaults['mlmonitor']['template_dir'] = '/var/lib/mlmonitor/templates'
 
+# This custom log handler is to bypass problems with the default cement logger
+class CustomLogHandler(LoggingLogHandler):
+    class Meta:
+        label = 'mlmonitor_logger'
+
+        #: The logging format for the file logger.
+        file_format = "%(asctime)s (%(levelname)s) : %(message)s"
+
+        #: The logging format for the consoler logger.
+        console_format = "%(levelname)s: %(message)s"
+
+        #: The logging format for both file and console if ``debug==True``.
+        debug_format = "%(asctime)s (%(levelname)s) : %(message)s"
 
 class MLMonitorApp(CementApp):
     class Meta:
         label = 'mlmonitor'
         config_defaults = defaults
+        # TODO: remove hardcoded conf file path
+        config_files = [
+            '/Users/craig/Desktop/ml-monitoring-plugin/config/mlmonitor.conf'
+        ]
+        extensions = ['daemon']
+        log_handler = 'mlmonitor_logger'
+        handlers = [
+            CustomLogHandler
+        ]
 
         # All built-in application bootstrapping (always run)
         bootstrap = 'mlmonitor.cli.bootstrap'
@@ -39,6 +62,7 @@ class MLMonitorApp(CementApp):
 
 class MLMonitorTestApp(MLMonitorApp):
     """A test app that is better suited for testing."""
+
     class Meta:
         # default argv to empty (don't use sys.argv)
         argv = []
@@ -54,25 +78,34 @@ class MLMonitorTestApp(MLMonitorApp):
 # to import it as a global (rather than passing it into another class/func)
 app = MLMonitorApp()
 
+
 def main():
     with app:
         try:
+            app.daemonize()
             app.run()
-        
+
         except exc.MLMonitorError as e:
             # Catch our application errors and exit 1 (error)
             print('MLMonitorError > %s' % e)
             app.exit_code = 1
-            
+
         except FrameworkError as e:
             # Catch framework errors and exit 1 (error)
             print('FrameworkError > %s' % e)
             app.exit_code = 1
-            
+
         except CaughtSignal as e:
             # Default Cement signals are SIGINT and SIGTERM, exit 0 (non-error)
             print('CaughtSignal > %s' % e)
             app.exit_code = 0
+
+        finally:
+            # Maybe we want to see a full-stack trace for the above
+            # exceptions, but only if --debug was passed?
+            if app.debug:
+                import traceback
+                traceback.print_exc()
 
 
 if __name__ == '__main__':

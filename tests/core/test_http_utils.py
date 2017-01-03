@@ -21,7 +21,7 @@
 import logging
 import unittest
 
-from mlmonitor.core.http_utils import HTTPUtil
+from mlmonitor.core.utils.http_utils import HTTPUtil
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)

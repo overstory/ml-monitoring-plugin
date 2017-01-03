@@ -27,11 +27,11 @@ docs for newrelic api - https://docs.newrelic.com/docs/apis
 
 import json
 import logging
+
 import __init__
+from mlmonitor.core.utils.http_utils import HTTPUtil
 
-from mlmonitor.core.http_utils import HTTPUtil
-
-log = logging.getLogger(__name__)
+log = logging.getLogger('cement:app:mlmonitor')
 
 
 class NewRelicUtility:
@@ -44,7 +44,6 @@ class NewRelicUtility:
     @staticmethod
     def update_newrelic(self, host=None, version=None, pid=None, name=None, guid=None, duration=None, metrics=None,
                         key=None, proxy=None):
-        log.debug('update newrelic')
 
         # construct newrelic agent
         agent = {'host': host or self.host, 'pid': pid or self.pid, 'version': version or self.version}
@@ -62,8 +61,8 @@ class NewRelicUtility:
         # send to the NewRelic API, supplying correct headers and using proxy (if defined).
         try:
             return HTTPUtil.http_post(
-                scheme="https",
-                url="https://platform-api.newrelic.com/platform/v1/metrics",
+                scheme="http",
+                url="http://platform-api.newrelic.com/platform/v1/metrics",
                 headers={'Accept': 'application/json',
                          'Content-Type': 'application/json',
                          'X-License-Key': key},

@@ -22,85 +22,53 @@ __init__.py module entry point for running plugin
 
 """
 
-import ConfigParser  # TBD- python 3.5 does not have this module
 import json
 import logging
 import re
-import sys
 import time
 
-from mlmonitor.core.marklogic_status import MarkLogicStatus
+from mlmonitor.core.marklogic.marklogic_status import MarkLogicStatus
 from mlmonitor.core.newrelic import newrelic_utils
 
-
-
-decl = {
-    'pidFile': 'newrelic_marklogic.pid',
-    'logFile': 'newrelic_marklogic.log',
-    'confFile': 'newrelic_marklogic.conf',
-    'logLevel': logging.INFO
-}
-
-log = logging.getLogger(__name__)
+__version__ = '0.3'
+log = logging.getLogger('cement:app:mlmonitor')
 
 
 class RunPlugin:
-    def __init__(self, pidFile=None, logFile=None, confFile=None):
+    def __init__(self, config=None):
 
         # setup configuration
-        self.confFile = confFile or decl['confFile']
-        try:
-            log.debug('parse config')
-            config = ConfigParser.ConfigParser()
-            config.read(self.confFile)
-            log.debug(config.get('marklogic', 'host'))
-            self.ml_host = config.get('marklogic', 'host')
-            self.ml_port = config.getint('marklogic', 'port')
-            self.ml_url = "http://" + self.ml_host + ":"
-            self.ml_url += repr(self.ml_port)
-            log.debug(self.ml_url)
-            self.ml_user = config.get('marklogic', 'user')
-            self.ml_pass = config.get('marklogic', 'pass')
-            self.ml_scheme = config.get('marklogic', 'scheme')
-            self.ml_auth = config.get('marklogic', 'auth')
-            self.nr_license_key = config.get('newrelic', 'key')
-            self.nr_http_proxy = config.get('newrelic', 'http_proxy')
-            self.plugin_name = config.get('plugin', 'name')
-            self.plugin_guid = config.get('plugin', 'guid')
-            self.plugin_duration = config.getint('plugin', 'duration')
-            self.plugin_summary_status = config.getboolean('plugin', 'summary_status')
-            self.plugin_databases = config.get('plugin', 'databases')
-            self.plugin_hosts_summary_status = config.getboolean('plugin', 'hosts_summary_status')
-            self.plugin_hosts = config.get('plugin', 'hosts')
-            self.plugin_forests_summary_status = config.getboolean('plugin', 'forests_summary_status')
-            self.plugin_forests = config.get('plugin', 'forests')
-            self.plugin_groups = config.get('plugin', 'groups')
-            self.plugin_servers_summary_status = config.getboolean('plugin', 'servers_summary_status')
-            self.plugin_servers = config.get('plugin', 'servers')
+        self.config = config
 
-            # setup logging
-            self.logFile = logFile or decl['logFile']
-            self.log_level = config.get('plugin', 'log_level') or decl["logLevel"]
-            handler = logging.FileHandler(self.logFile, 'w')
-            formatter = logging.Formatter(
-                '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
-            handler.setFormatter(formatter)
-            log.addHandler(handler)
-            log.setLevel(self.log_level)
-            log.debug("init plugin")
-            stream_handler = logging.StreamHandler(sys.stderr)
-            log.addHandler(stream_handler)
+        log.debug('parse config')
+        log.debug(config.get('marklogic', 'host'))
+        self.ml_host = config.get('marklogic', 'host')
+        self.ml_port = config.getint('marklogic', 'port')
+        self.ml_url = "http://" + self.ml_host + ":"
+        self.ml_url += repr(self.ml_port)
+        log.debug(self.ml_url)
+        self.ml_user = config.get('marklogic', 'user')
+        self.ml_pass = config.get('marklogic', 'pass')
+        self.ml_scheme = config.get('marklogic', 'scheme')
+        self.ml_auth = config.get('marklogic', 'auth')
+        self.nr_license_key = config.get('newrelic', 'key')
+        self.nr_http_proxy = config.get('newrelic', 'http_proxy')
+        self.plugin_name = config.get('plugin', 'name')
+        self.plugin_guid = config.get('plugin', 'guid')
+        self.plugin_duration = config.getint('plugin', 'duration')
+        self.plugin_summary_status = config.getboolean('plugin', 'summary_status')
+        self.plugin_databases = config.get('plugin', 'databases')
+        self.plugin_hosts_summary_status = config.getboolean('plugin', 'hosts_summary_status')
+        self.plugin_hosts = config.get('plugin', 'hosts')
+        self.plugin_forests_summary_status = config.getboolean('plugin', 'forests_summary_status')
+        self.plugin_forests = config.get('plugin', 'forests')
+        self.plugin_groups = config.get('plugin', 'groups')
+        self.plugin_servers_summary_status = config.getboolean('plugin', 'servers_summary_status')
+        self.plugin_servers = config.get('plugin', 'servers')
 
-            # setup pid
-            self.pidfile_path = pidFile or decl['pidFile']
-            self.pidfile_timeout = 5
-
-        except ConfigParser.ParsingError as e:
-            log.error("Problem with configuration.")
-            log.error(e)
 
     def run(self):
-        log.info("newrelic_marklogic plugin now sending statuses to NewRelic Plugin API (to see more log messages change log_level=DEBUG).")
+        log.info("newrelic_marklogic plugin now sending statuses to NewRelic Plugin API (to see more log messages change level=debug).")
         while True:
             try:
                 self.statusUpdate()
@@ -448,17 +416,3 @@ class RunPlugin:
                 return metrics
             else:
                 log.error("cannot retrieve " + server + " server status, check configuration")
-
-    @staticmethod
-    def usage():
-        log.debug("output usage instructions")
-        print("""newrelic_marklogic v%s - NewRelic plugin for monitoring MarkLogic.
-
-usage: ./newrelic_marklogic.py [-h] [-c config file] [-l log file]
-
-    -h print usage instructions  (this message)
-    -c config file               (default: %s)
-    -l log file                  (default: %s)
-    """ % (__version__,
-           decl['confFile'],
-           decl['logFile']))

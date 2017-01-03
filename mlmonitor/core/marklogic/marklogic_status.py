@@ -28,9 +28,10 @@ NOTE - did not use marklogic-python api as that package is based on python 3.
 """
 
 import logging
-from http_utils import HTTPUtil
 
-log = logging.getLogger(__name__)
+from mlmonitor.core.utils.http_utils import HTTPUtil
+
+log = logging.getLogger('cement:app:mlmonitor')
 
 
 class MarkLogicStatus:
