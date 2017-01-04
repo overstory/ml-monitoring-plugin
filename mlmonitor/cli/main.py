@@ -33,18 +33,27 @@ class CustomLogHandler(LoggingLogHandler):
         #: The logging format for both file and console if ``debug==True``.
         debug_format = "%(asctime)s (%(levelname)s) : %(message)s"
 
+def reload_commandline_config(app):
+    if (app.pargs.config):
+        app.config.parse_file(app.pargs.config)
+    pass
+
 class MLMonitorApp(CementApp):
     class Meta:
         label = 'mlmonitor'
         config_defaults = defaults
-        # TODO: remove hardcoded conf file path
         config_files = [
-            '/Users/craig/Desktop/ml-monitoring-plugin/config/mlmonitor.conf'
+            '~/.mlmonitor/application.conf',
+            '../../config/mlmonitor.conf'
         ]
         extensions = ['daemon']
         log_handler = 'mlmonitor_logger'
         handlers = [
             CustomLogHandler
+        ]
+
+        hooks = [
+            ('post_argument_parsing', reload_commandline_config)
         ]
 
         # All built-in application bootstrapping (always run)
@@ -83,6 +92,7 @@ def main():
     with app:
         try:
             app.daemonize()
+            app.args.add_argument('-c', action='store', dest='config', help='Location of config file to parse')
             app.run()
 
         except exc.MLMonitorError as e:
