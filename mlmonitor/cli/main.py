@@ -19,6 +19,7 @@ defaults['mlmonitor']['plugin_dir'] = '/var/lib/mlmonitor/plugins'
 # External templates (generally, do not ship with application code)
 defaults['mlmonitor']['template_dir'] = '/var/lib/mlmonitor/templates'
 
+
 # This custom log handler is to bypass problems with the default cement logger
 class CustomLogHandler(LoggingLogHandler):
     class Meta:
@@ -33,10 +34,12 @@ class CustomLogHandler(LoggingLogHandler):
         #: The logging format for both file and console if ``debug==True``.
         debug_format = "%(asctime)s (%(levelname)s) : %(message)s"
 
+
 def reload_commandline_config(app):
     if (app.pargs.config):
         app.config.parse_file(app.pargs.config)
     pass
+
 
 class MLMonitorApp(CementApp):
     class Meta:
@@ -100,15 +103,19 @@ def main():
             print('MLMonitorError > %s' % e)
             app.exit_code = 1
 
+        except CaughtSignal as e:
+            # Default Cement signals are SIGINT and SIGTERM, exit 0 (non-error)
+            from signal import SIGINT, SIGABRT
+
+            if e.signum == SIGINT:
+                app.exit_code = 110
+            elif e.signum == SIGABRT:
+                app.exit_code = 111
+
         except FrameworkError as e:
             # Catch framework errors and exit 1 (error)
             print('FrameworkError > %s' % e)
-            app.exit_code = 1
-
-        except CaughtSignal as e:
-            # Default Cement signals are SIGINT and SIGTERM, exit 0 (non-error)
-            print('CaughtSignal > %s' % e)
-            app.exit_code = 0
+            app.exit_code = 300
 
         finally:
             # Maybe we want to see a full-stack trace for the above
