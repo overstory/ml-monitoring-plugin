@@ -24,7 +24,7 @@ from __future__ import absolute_import
 import logging
 import unittest
 
-from core import MarkLogicStatus
+from mlmonitor.core import MarkLogicStatus
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)

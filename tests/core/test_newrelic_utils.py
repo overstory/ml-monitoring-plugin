@@ -22,7 +22,7 @@ from __future__ import absolute_import
 import logging
 import unittest
 
-from core.newrelic.newrelic_utils import NewRelicUtility
+from mlmonitor.core.newrelic.newrelic_utils import NewRelicUtility
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)
