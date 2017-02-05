@@ -1,13 +1,13 @@
-from os.path import join
+import io
+from os.path import dirname, join
 
 from setuptools import setup, find_packages
-from os.path import dirname, join
 
 
 setup(name='mlmonitor',
     version='0.3',
     description="Universal monitoring plugin for MarkLogic",
-    long_description=open(join(dirname(__file__), 'README.rst'), encoding='utf-8').read(),
+    long_description=io.open(join(dirname(__file__), 'README.rst'), encoding='utf-8').read(),
     classifiers=['Programming Language :: Python',
                      'Development Status :: 3 - Alpha',
                      'Natural Language :: English',
@@ -21,7 +21,7 @@ setup(name='mlmonitor',
     author='Overstory LLP',
     author_email='products@overstory.co.uk',
     url='https://github.com/overstory/ml-monitoring-plugin',
-    license=open(join(dirname(__file__), 'LICENSE'), encoding='utf-8').read(),
+    license=io.open(join(dirname(__file__), 'LICENSE'), encoding='utf-8').readline().strip(),
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     include_package_data=True,
     zip_safe=False,

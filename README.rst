@@ -7,7 +7,7 @@ MarkLogic.
 Features
 --------
 
--  Easy to install
+-  Easy to install as pip or rpm
 -  Configurable selection of metrics to retrieve
 -  Retrieve summary metrics on local cluster, hosts, servers & forests.
 -  Retrieve detail metrics on databases, forests, hosts, groups & servers.
@@ -31,6 +31,16 @@ Docs
 
 `newrelic-marklogic-plugin docs on pypi <https://pypi.python.org/pypi/newrelic-marklogic-plugin>`__
 
+Build
+-----
+
+A pure python package can be build by running
+``python setup.py clean bdist_wheel
+
+rpm package can be build by running
+``python setup.py clean bdist_rpm
+
+
 
 Install, configure & run
 ------------------------
@@ -40,6 +50,10 @@ Install the plugin using any of the following methods.
 - install from pypi repository
 
     ``pip install newrelic-marklogic-plugin``
+
+- install as rpm
+
+    ``yum localinstall -y mlmonitor-0.3-0.1.noarch.rpm
 
 - install direct from github
 
@@ -54,14 +68,14 @@ Next step is to create and edit configuration file.
 
 1) Copy
    `etc/newrelic\_marklogic.conf.sample <https://github.com/marklogic/newrelic-plugin/blob/master/etc/newrelic_marklogic.conf.sample>`__
-   and to ``newrelic_marklogic.conf``
+   and to ``mlmonitor.conf``
 
-2) Edit ``newrelic_marklogic.conf`` ensuring correct MarkLogic
+2) Edit ``mlmonitor.conf`` ensuring correct MarkLogic
    connection details and NewRelic license key
 
 Start reporting metrics to NewRelic by running the following.
 
-    ``newrelic_marklogic.py -c newrelic_marklogic.conf``
+    ``ml-monitoring-plugin/mlmonitor/cli/main.py -c newrelic_marklogic.conf``
 
 Which samples metrics every period of length duration as set within configuration.
 
@@ -70,15 +84,25 @@ approach appropriate for your environment.
 
 Running with -h flag will emit usage instructions for running plugin.
 
-    ``newrelic_marklogic.py -h``
+    ``ml-monitoring-plugin/mlmonitor/cli/main.py -h``
 
 ::
 
-    usage: ./newrelic_marklogic.py [-h] [-c config file] [-l log file]
+    usage: mlmonitor [-h] [--debug] [--quiet] [--daemon] [-c CONFIG]
+                 {newrelic} ...
 
-    -h print usage instructions  (this message)
-    -c config file               (default: newrelic_marklogic.conf)
-    -l log file                  (default: newrelic_marklogic.log)
+    Universal monitoring plugin for MarkLogic
+
+    optional arguments:
+      -h, --help  show this help message and exit
+      --debug     toggle debug output
+      --quiet     suppress all output
+      --daemon    daemonize the process
+      -c CONFIG   Location of config file to parse
+
+    sub-commands:
+      {newrelic}
+        newrelic  Starts up process to monitor MarkLogic with New Relic
 
 Usage
 -----
