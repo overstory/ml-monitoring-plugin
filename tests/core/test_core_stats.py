@@ -1,5 +1,5 @@
 from unittest import TestCase
-from mlmonitor.core.stats.core import SimpleStatistic, StatisticType
+from mlmonitor.core.stats.base import SimpleStatistic, StatisticType
 
 
 class CoreStatsTest(TestCase):

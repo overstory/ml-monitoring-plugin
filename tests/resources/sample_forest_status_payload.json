@@ -1,0 +1,325 @@
+{
+  "forest-status-list": {
+    "meta": {
+      "uri": "/manage/v2/forests?view=status",
+      "current-time": "2017-02-27T23:08:26.220517Z",
+      "elapsed-time": {
+        "units": "sec",
+        "value": 0.021871
+      }
+    },
+    "status-list-summary": {
+      "total-forests": {
+        "units": "quantity",
+        "value": 12
+      },
+      "state-not-open": {
+        "units": "quantity",
+        "value": 0
+      },
+      "max-stands-per-forest": {
+        "units": "quantity",
+        "value": 5
+      },
+      "merge-count": {
+        "units": "quantity",
+        "value": 0
+      },
+      "backup-count": {
+        "units": "quantity",
+        "value": 0
+      },
+      "restore-count": {
+        "units": "quantity",
+        "value": 0
+      },
+      "min-capacity": {
+        "units": "%",
+        "value": "52.31842"
+      },
+      "load-properties": {
+        "total-load": {
+          "units": "sec/sec",
+          "value": 96.0620346069336
+        },
+        "load-detail": {
+          "query-read-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "journal-write-load": {
+            "units": "sec/sec",
+            "value": 0.0076183769851923
+          },
+          "save-write-load": {
+            "units": "sec/sec",
+            "value": 0.00624052388593555
+          },
+          "merge-read-load": {
+            "units": "sec/sec",
+            "value": 0.00366436108015478
+          },
+          "merge-write-load": {
+            "units": "sec/sec",
+            "value": 0.00455080019310117
+          },
+          "backup-read-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "backup-write-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "restore-read-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "restore-write-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "large-read-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "large-write-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "database-replication-send-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "database-replication-receive-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "read-lock-wait-load": {
+            "units": "sec/sec",
+            "value": 0
+          },
+          "read-lock-hold-load": {
+            "units": "sec/sec",
+            "value": 25.9113597869873
+          },
+          "write-lock-wait-load": {
+            "units": "sec/sec",
+            "value": 7.33483219146729
+          },
+          "write-lock-hold-load": {
+            "units": "sec/sec",
+            "value": 60.786018371582
+          },
+          "deadlock-wait-load": {
+            "units": "sec/sec",
+            "value": 2.00775790214539
+          }
+        }
+      },
+      "rate-properties": {
+        "total-rate": {
+          "units": "MB/sec",
+          "value": 233.320816040039
+        },
+        "rate-detail": {
+          "query-read-rate": {
+            "units": "MB/sec",
+            "value": 0.0324927009642124
+          },
+          "journal-write-rate": {
+            "units": "MB/sec",
+            "value": 1.15940201282501
+          },
+          "save-write-rate": {
+            "units": "MB/sec",
+            "value": 1.32580494880676
+          },
+          "merge-read-rate": {
+            "units": "MB/sec",
+            "value": 1.52278602123261
+          },
+          "merge-write-rate": {
+            "units": "MB/sec",
+            "value": 1.37429594993591
+          },
+          "backup-read-rate": {
+            "units": "MB/sec",
+            "value": 0
+          },
+          "backup-write-rate": {
+            "units": "MB/sec",
+            "value": 0
+          },
+          "restore-read-rate": {
+            "units": "MB/sec",
+            "value": 0
+          },
+          "restore-write-rate": {
+            "units": "MB/sec",
+            "value": 0
+          },
+          "large-read-rate": {
+            "units": "MB/sec",
+            "value": 0
+          },
+          "large-write-rate": {
+            "units": "MB/sec",
+            "value": 0
+          },
+          "database-replication-send-rate": {
+            "units": "MB/sec",
+            "value": 0
+          },
+          "database-replication-receive-rate": {
+            "units": "MB/sec",
+            "value": 0
+          },
+          "read-lock-rate": {
+            "units": "MB/sec",
+            "value": 67.3957595825195
+          },
+          "write-lock-rate": {
+            "units": "MB/sec",
+            "value": 159.83479309082
+          },
+          "deadlock-rate": {
+            "units": "MB/sec",
+            "value": 0.675450086593628
+          }
+        }
+      },
+      "cache-properties": {
+        "list-cache-hit-rate": {
+          "units": "hits/sec",
+          "value": 76.9899978637695
+        },
+        "list-cache-miss-rate": {
+          "units": "misses/sec",
+          "value": 0.0199999995529652
+        },
+        "triple-cache-hit-rate": {
+          "units": "hits/sec",
+          "value": 0
+        },
+        "triple-cache-miss-rate": {
+          "units": "misses/sec",
+          "value": 0
+        },
+        "triple-value-cache-hit-rate": {
+          "units": "hits/sec",
+          "value": 0
+        },
+        "triple-value-cache-miss-rate": {
+          "units": "misses/sec",
+          "value": 0
+        },
+        "compressed-tree-cache-hit-rate": {
+          "units": "hits/sec",
+          "value": 10.8199996948242
+        },
+        "compressed-tree-cache-miss-rate": {
+          "units": "misses/sec",
+          "value": 0.97000002861023
+        },
+        "list-cache-ratio": {
+          "units": "%",
+          "value": "100"
+        },
+        "triple-cache-ratio": {
+          "units": "%",
+          "value": "0"
+        },
+        "triple-value-cache-ratio": {
+          "units": "%",
+          "value": "92"
+        },
+        "compressed-tree-cache-ratio": {
+          "units": "%",
+          "value": "95"
+        },
+        "large-binary-cache-hit-rate": {
+          "units": "hits/sec",
+          "value": 0
+        },
+        "large-binary-cache-miss-rate": {
+          "units": "misses/sec",
+          "value": 0
+        }
+      }
+    },
+    "status-list-items": {
+      "status-list-item": [
+        {
+          "uriref": "/manage/v2/forests/App-Services?view=status",
+          "idref": "1624568677399001498",
+          "nameref": "App-Services"
+        },
+        {
+          "uriref": "/manage/v2/forests/AutopilotLoadTest-1?view=status",
+          "idref": "10973514274441935195",
+          "nameref": "AutopilotLoadTest-1"
+        },
+        {
+          "uriref": "/manage/v2/forests/AutopilotLoadTest-2?view=status",
+          "idref": "2310767913740312127",
+          "nameref": "AutopilotLoadTest-2"
+        },
+        {
+          "uriref": "/manage/v2/forests/Documents?view=status",
+          "idref": "570940095099352893",
+          "nameref": "Documents"
+        },
+        {
+          "uriref": "/manage/v2/forests/Extensions?view=status",
+          "idref": "12805185522681266338",
+          "nameref": "Extensions"
+        },
+        {
+          "uriref": "/manage/v2/forests/Fab?view=status",
+          "idref": "16828304562628186692",
+          "nameref": "Fab"
+        },
+        {
+          "uriref": "/manage/v2/forests/Last-Login?view=status",
+          "idref": "17076772217923008241",
+          "nameref": "Last-Login"
+        },
+        {
+          "uriref": "/manage/v2/forests/Meters?view=status",
+          "idref": "15350364250969842651",
+          "nameref": "Meters"
+        },
+        {
+          "uriref": "/manage/v2/forests/Modules?view=status",
+          "idref": "604710742993908842",
+          "nameref": "Modules"
+        },
+        {
+          "uriref": "/manage/v2/forests/Schemas?view=status",
+          "idref": "4807275862093486073",
+          "nameref": "Schemas"
+        },
+        {
+          "uriref": "/manage/v2/forests/Security?view=status",
+          "idref": "9212616574340616744",
+          "nameref": "Security"
+        },
+        {
+          "uriref": "/manage/v2/forests/Triggers?view=status",
+          "idref": "5788187445740614702",
+          "nameref": "Triggers"
+        }
+      ]
+    },
+    "related-views": {
+      "related-view": [
+        {
+          "view-type": "list",
+          "view-name": "default",
+          "view-uri": "/manage/v2/forests"
+        }
+      ]
+    }
+  }
+}
