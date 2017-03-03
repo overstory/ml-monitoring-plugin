@@ -19,10 +19,11 @@
 
 # This is here to deal with a bug in in PyCharm 2016.3.  Can be removed/ignored as needed.
 from __future__ import absolute_import
+
 import logging
 import unittest
 
-from mlmonitor.core.newrelic.newrelic_utils import NewRelicUtility
+from mlmonitor.core.utils.newrelic_utils import NewRelicUtility
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)

@@ -28,7 +28,6 @@ import re
 import time
 
 from mlmonitor.core.marklogic.marklogic_status import MarkLogicStatus
-from mlmonitor.core.newrelic import newrelic_utils
 
 __version__ = '0.3'
 log = logging.getLogger('cement:app:mlmonitor')

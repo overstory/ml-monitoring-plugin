@@ -28,14 +28,14 @@ docs for newrelic api - https://docs.newrelic.com/docs/apis
 import json
 import logging
 
-import __init__
+from mlmonitor.core import __version__
 from mlmonitor.core.utils.http_utils import HTTPUtil
 
 log = logging.getLogger('cement:app:mlmonitor')
 
 
 class NewRelicUtility:
-    def __init__(self, host='localhost', pid='default', version=__init__.__version__):
+    def __init__(self, host='localhost', pid='default', version=__version__):
         log.debug('init NewRelicUtility')
         self.host = host
         self.pid = pid
