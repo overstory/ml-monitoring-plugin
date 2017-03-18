@@ -1,8 +1,5 @@
 import logging
 from threading import Thread
-from unittest import TestCase
-
-from bottle import Bottle
 
 log = logging.getLogger('cement:app:mlmonitor')
 handler = logging.StreamHandler()
@@ -12,11 +9,15 @@ handler.setFormatter(formatter)
 log.setLevel(logging.DEBUG)
 
 
-class ServeredTestCase(TestCase):
-    app = Bottle()
-    t = Thread()
+def requires_http_server(app, host, port):
+    def outer_wrapper(f):
+        def wrapper(*args, **kwargs):
+            t = Thread(target=app.run, kwargs={'host': host, 'port': port})
+            t.setDaemon(True)
+            t.start()
 
-    def setUp(self):
-        self.t = Thread(target=self.app.run, args=())
-        self.t.setDaemon(True)
-        self.t.start()
+            return f(*args, **kwargs)
+
+        return wrapper
+
+    return outer_wrapper

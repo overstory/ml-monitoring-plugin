@@ -4,6 +4,8 @@ from unittest import TestCase
 
 import logging
 
+import time
+
 from mlmonitor.core.utils.statsd_utils import StatsdUtility
 
 log = logging.getLogger()
@@ -35,6 +37,10 @@ class StatsdUtilsTests(TestCase):
     def test_statsd_util(self):
         test_message = 'Test message here'
         StatsdUtility.update_statsd(test_message, self.host, self.port)
+
+        # This is a hack.  Concurrency from test runners and UDP server on setUp() can make the assertion run before the UDP
+        # server can capture the result.
+        time.sleep(1)
 
         self.assertEquals(self.message, test_message)
 

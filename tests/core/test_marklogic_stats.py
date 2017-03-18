@@ -1,24 +1,29 @@
 import os
+from unittest import TestCase
+
+from bottle import response, Bottle
+
 from mlmonitor.core.stats.marklogic import JsonRestStatSet
-from tests.core.base import ServeredTestCase
-from bottle import response
+from tests.core.base import requires_http_server
 
 
-class MarkLogicStatsCase(ServeredTestCase):
-    def setUp(self):
-        super(MarkLogicStatsCase, self).setUp()
-        app = super(MarkLogicStatsCase, self).app
+class MarkLogicStatsCase(TestCase):
+    host = '127.0.0.1'
+    port = '8081'
+    app = Bottle()
 
-        @app.route('/forest/status')
+    @requires_http_server(app, host, port)
+    def test_base_stat(self):
+        @self.app.route('/forest/status')
         def forest_status():
             response.set_header('Content-Type', 'application/json')
-            with open(os.path.dirname(os.path.realpath('__file__')) + '/resources/sample_forest_status_payload.json') as datafile:
+            with open(os.path.dirname(
+                    os.path.realpath('__file__')) + '/resources/sample_forest_status_payload.json') as datafile:
                 payload = datafile.read().replace('\n', '')
             return payload
 
-    def test_base_stat(self):
         name = 'test stat set'
-        url = 'http://127.0.0.1:8080/forest/status'
+        url = 'http://{0}:{1}/forest/status'.format(self.host, self.port)
 
         stat_set = JsonRestStatSet(name, url)
         stat_set.calculate()
