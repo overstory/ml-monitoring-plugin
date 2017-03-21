@@ -1,6 +1,7 @@
 import logging
-import requests
+from urlparse import urlparse
 
+from mlmonitor.core.utils.http_utils import HTTPUtil
 from mlmonitor.core.stats.base import StatSet, SimpleStatistic, StatisticType
 
 log = logging.getLogger('cement:app:mlmonitor')
@@ -26,21 +27,19 @@ def generate_statistic_objects(prefix, dictionary, list):
 class JsonRestStatSet(StatSet):
     _stats = []
 
-    def __init__(self, name, url):
+    def __init__(self, name=None, url=None, auth_scheme='DIGEST'):
         self.name = name
         self.url = url
+        self.auth_scheme = auth_scheme
 
     @property
     def stats(self):
         return self._stats
 
     def calculate(self):
-        response = requests.get(self.url)
+        url = urlparse(self.url)
+        response = HTTPUtil.http_get(scheme='http', host=url.hostname, port=url.port, path=url.path + "?" + url.query, user = url.username, passwd=url.password, auth=self.auth_scheme)
+        main_prefix = response.keys()[0]
+        status_list_summary = response.values()[0]['status-list-summary']
 
-        if response.status_code == 200:
-            main_prefix = response.json().keys()[0]
-            status_list_summary = response.json().values()[0]['status-list-summary']
-
-            generate_statistic_objects(main_prefix, status_list_summary, self._stats)
-        else:
-            log.error("Response returned: {0} {1}".format(response.status_code, response.reason))
+        generate_statistic_objects(main_prefix, status_list_summary, self._stats)

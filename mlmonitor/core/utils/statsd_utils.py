@@ -13,9 +13,8 @@ class StatsdUtility:
 
         try:
             # Send data
-            log.debug("Sending the following to {0}:{1}: {2}".format(host, port, metric))
+            log.debug("Sending the following to statsd daemon {0}:{1}: {2}".format(host, port, metric))
             sock.sendto(metric, server_address)
 
         finally:
-            log.debug("Closing socket on client")
             sock.close()

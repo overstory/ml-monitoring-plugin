@@ -1,0 +1,11 @@
+---
+endpoints:
+  -
+    component: JsonRestStatSet
+    name: forest.status
+    url: /manage/v2/forests?view=status&format=json
+  -
+    component: JsonRestStatSet
+    name: host.statusmyapp
+    foo: bar
+    url: /manage/v2/hosts?view=status&format=json

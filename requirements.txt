@@ -2,3 +2,4 @@ cement>=2.10.0
 requests>=2.11.1
 enum34>=1.1.6
 bottle>=0.12.13
+pyYaml>=3.12

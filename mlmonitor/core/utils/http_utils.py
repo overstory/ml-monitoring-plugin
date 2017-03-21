@@ -66,7 +66,6 @@ class HTTPUtil:
                     return response
             else:
                 log.error("HTTP Request returned " + str(response.status_code) + " when accessing "+ requrl + " , check configuration.")
-                sys.exit(1)
             return
 
         except requests.exceptions.Timeout:
@@ -75,7 +74,6 @@ class HTTPUtil:
             log.error("too many redirects")
         except requests.exceptions.RequestException as e:
             log.error(e)
-            sys.exit(1)
         return
 
     @staticmethod
@@ -109,5 +107,4 @@ class HTTPUtil:
             log.error("too many redirects")
         except requests.exceptions.RequestException as e:
             log.error(e)
-            sys.exit(1)
         return
