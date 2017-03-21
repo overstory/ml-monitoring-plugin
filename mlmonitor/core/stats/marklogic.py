@@ -39,7 +39,6 @@ class JsonRestStatSet(StatSet):
     def calculate(self):
         url = urlparse(self.url)
         response = HTTPUtil.http_get(scheme='http', host=url.hostname, port=url.port, path=url.path + "?" + url.query, user = url.username, passwd=url.password, auth=self.auth_scheme)
-        main_prefix = response.keys()[0]
         status_list_summary = response.values()[0]['status-list-summary']
 
-        generate_statistic_objects(main_prefix, status_list_summary, self._stats)
+        generate_statistic_objects(self.name, status_list_summary, self._stats)

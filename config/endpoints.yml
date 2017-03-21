@@ -2,10 +2,13 @@
 endpoints:
   -
     component: JsonRestStatSet
-    name: forest.status
+    name: forest.all.status
     url: /manage/v2/forests?view=status&format=json
   -
     component: JsonRestStatSet
-    name: host.statusmyapp
-    foo: bar
+    name: host.all.status
     url: /manage/v2/hosts?view=status&format=json
+  -
+    component: JsonRestStatSet
+    name: server.all.status
+    url: /manage/v2/servers?view=status&format=json
