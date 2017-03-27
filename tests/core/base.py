@@ -12,7 +12,7 @@ log.setLevel(logging.DEBUG)
 def requires_http_server(app, host, port):
     def outer_wrapper(f):
         def wrapper(*args, **kwargs):
-            t = Thread(target=app.run, kwargs={'host': host, 'port': port})
+            t = Thread(target=app.run, kwargs={'host': host, 'port': port, 'debug': True})
             t.setDaemon(True)
             t.start()
 
