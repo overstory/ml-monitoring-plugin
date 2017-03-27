@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from bottle import response, Bottle
 
-from mlmonitor.core.stats.marklogic import JsonRestStatSet
+from mlmonitor.core.stats.marklogic import JsonRestStatSet, STATISTIC_UNITS_TO_IGNORE
 from tests.core.base import requires_http_server
 
 
@@ -34,6 +34,10 @@ class MarkLogicStatsCase(TestCase):
         self.assertEquals(stat_set.stats[0].name, 'forest-status-list.rate-properties.rate-detail.merge-write-rate')
         self.assertEquals(float(stat_set.stats[0].value), 1.37429594993591)
         self.assertEquals(stat_set.stats[0].unit, 'MB/sec')
+
+        # Test to make sure none of the units on the excluded list
+        for stat in stat_set.stats:
+            self.assertNotIn(stat.unit, STATISTIC_UNITS_TO_IGNORE)
 
     @requires_http_server(app, host, port)
     def test_stat_with_nested_payload(self):
