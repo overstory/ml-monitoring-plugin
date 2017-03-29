@@ -1,4 +1,5 @@
 """MarkLogic Monitoring Plugin base controller."""
+import os
 import traceback
 from importlib import import_module
 
@@ -6,9 +7,10 @@ import time
 
 import re
 import yaml
+import mlmonitor
 from cement.ext.ext_argparse import ArgparseController, expose
 
-from core.utils.statsd_utils import StatsdUtility
+from mlmonitor.core.utils.statsd_utils import StatsdUtility
 from mlmonitor.core import RunPlugin
 
 
@@ -48,7 +50,7 @@ class MLMonitorBaseController(ArgparseController):
         # Cement's config handler assumes there are unique name-values for everything.  That's not this kind of config.
         # Because config is an arbitrary list of endpoints to load, we'll have to handle this manually.
         all_endpoints = []
-        endpoint_config = yaml.load(open(self.app.config.get('mlmonitor', 'endpoints_file')))
+        endpoint_config = yaml.load(open(os.path.dirname(mlmonitor.__file__) + '/config/endpoints.yml'))
 
         # Load global stats.  These are consistent with all MarkLogic installations
         for endpoint in endpoint_config['endpoints']['global']:

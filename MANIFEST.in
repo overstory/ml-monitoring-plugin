@@ -1,3 +1,2 @@
 include README.rst
 include LICENSE
-include etc/newrelic_marklogic.conf.sample
