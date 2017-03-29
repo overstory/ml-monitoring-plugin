@@ -1,12 +1,11 @@
 import logging
 from urlparse import urlparse
 
+from mlmonitor.core.stats.base import STATISTIC_UNITS_TO_IGNORE
+from mlmonitor.core.stats.base import StatSet, SimpleStatistic
 from mlmonitor.core.utils.http_utils import HTTPUtil
-from mlmonitor.core.stats.base import StatSet, SimpleStatistic, StatisticType
 
 log = logging.getLogger('cement:app:mlmonitor')
-
-STATISTIC_UNITS_TO_IGNORE = ('bool', 'enum')
 
 
 def generate_statistic_objects(prefix, dictionary, list_of_stats):
@@ -14,6 +13,9 @@ def generate_statistic_objects(prefix, dictionary, list_of_stats):
 
     if isinstance(dictionary, list) and isinstance(dictionary[0], dict):
         generate_statistic_objects(prefix, dictionary[0], list_of_stats)
+    elif 'stand-id' in dictionary.keys():
+        stand_id = dictionary.pop('stand-id', None)[0]
+        generate_statistic_objects(prefix + "." + stand_id, dictionary, list_of_stats)
     else:
         for key, value in dictionary.items():
             if (prefix):
@@ -25,7 +27,7 @@ def generate_statistic_objects(prefix, dictionary, list_of_stats):
                 generate_statistic_objects(new_prefix, value, list_of_stats)
             elif key == 'value':
                 if (dictionary.get('units', None) and dictionary['units'] not in STATISTIC_UNITS_TO_IGNORE):
-                    stat = SimpleStatistic(prefix, StatisticType.gauge, value, dictionary['units'])
+                    stat = SimpleStatistic(prefix, value, dictionary['units'])
                     log.debug("Adding SimpleStatistic: " + stat.__str__())
                     list_of_stats.append(stat)
 

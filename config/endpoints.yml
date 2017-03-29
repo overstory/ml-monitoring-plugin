@@ -1,35 +1,35 @@
 ---
 endpoints:
   global:
-#    -
-#      component: JsonRestStatSet
-#      name: forest.all.status
-#      url: /manage/v2/forests?view=status&format=json
-#    -
-#      component: JsonRestStatSet
-#      name: host.all.status
-#      url: /manage/v2/hosts?view=status&format=json
-#    -
-#      component: JsonRestStatSet
-#      name: server.all.status
-#      url: /manage/v2/servers?view=status&format=json
+    -
+      component: JsonRestStatSet
+      name: forest.all.status
+      url: /manage/v2/forests?view=status&format=json
+    -
+      component: JsonRestStatSet
+      name: host.all.status
+      url: /manage/v2/hosts?view=status&format=json
+    -
+      component: JsonRestStatSet
+      name: server.all.status
+      url: /manage/v2/servers?view=status&format=json
   configurable:
-#    -
-#      component: JsonRestStatSet
-#      name: host.[hosts].status
-#      url: /manage/v2/hosts/[hosts]?view=status&format=json
-#    -
-#      component: JsonRestStatSet
-#      name: group.[groups].status
-#      url: /manage/v2/groups/[groups]?view=status&format=json
-#    -
-#      component: JsonRestStatSet
-#      name: forest.[forests].status
-#      url: /manage/v2/forests/[forests]?view=status&format=json
-#    -
-#      component: JsonRestStatSet
-#      name: database.[databases].status
-#      url: /manage/v2/databases/[databases]?view=status&format=json
+    -
+      component: JsonRestStatSet
+      name: host.[hosts].status
+      url: /manage/v2/hosts/[hosts]?view=status&format=json
+    -
+      component: JsonRestStatSet
+      name: group.[groups].status
+      url: /manage/v2/groups/[groups]?view=status&format=json
+    -
+      component: JsonRestStatSet
+      name: forest.[forests].status
+      url: /manage/v2/forests/[forests]?view=status&format=json
+    -
+      component: JsonRestStatSet
+      name: database.[databases].status
+      url: /manage/v2/databases/[databases]?view=status&format=json
     -
       component: JsonRestStatSet
       name: server.[servers].status

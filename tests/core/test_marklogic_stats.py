@@ -3,7 +3,8 @@ from unittest import TestCase
 
 from bottle import response, Bottle
 
-from mlmonitor.core.stats.marklogic import JsonRestStatSet, STATISTIC_UNITS_TO_IGNORE
+from mlmonitor.core.stats.marklogic import JsonRestStatSet
+from mlmonitor.core.stats.base import STATISTIC_UNITS_TO_IGNORE, StatisticType
 from tests.core.base import requires_http_server
 
 
@@ -38,6 +39,12 @@ class MarkLogicStatsCase(TestCase):
         # Test to make sure none of the units on the excluded list
         for stat in stat_set.stats:
             self.assertNotIn(stat.unit, STATISTIC_UNITS_TO_IGNORE)
+            if (stat.stat_type == StatisticType.timer):
+                self.assertTrue(stat.statsd().endswith('s'))
+            else:
+                self.assertTrue(stat.statsd().endswith('g'))
+
+
 
     @requires_http_server(app, host, port)
     def test_stat_with_nested_payload(self):

@@ -1,4 +1,5 @@
 """MarkLogic Monitoring Plugin base controller."""
+import traceback
 from importlib import import_module
 
 import time
@@ -38,7 +39,8 @@ class MLMonitorBaseController(ArgparseController):
                                                     host=self.app.config.get('statsd', 'host'),
                                                     port=int(self.app.config.get('statsd', 'port')))
             except Exception as e:
-                self.app.log.error(e)
+                self.app.log.error(e, __name__)
+                traceback.print_exc()
             self.app.log.info('Waiting for {0} seconds...'.format(self.app.config.get('plugin', 'duration')))
             time.sleep(int(self.app.config.get('plugin', 'duration')))
 
@@ -49,30 +51,30 @@ class MLMonitorBaseController(ArgparseController):
         endpoint_config = yaml.load(open(self.app.config.get('mlmonitor', 'endpoints_file')))
 
         # Load global stats.  These are consistent with all MarkLogic installations
-        # for endpoint in endpoint_config['endpoints']['global']:
-        #     module = import_module('mlmonitor.core.stats.marklogic')
-        #     component = getattr(module, endpoint['component'])()
-        #     for key in endpoint.keys():
-        #         if key != 'component':
-        #             if key == 'url':
-        #                 value = '{0}://{1}:{2}@{3}:{4}{5}'.format(
-        #                     self.app.config.get('marklogic', 'scheme'),
-        #                     self.app.config.get('marklogic', 'user'),
-        #                     self.app.config.get('marklogic', 'pass'),
-        #                     self.app.config.get('marklogic', 'host'),
-        #                     self.app.config.get('marklogic', 'port'),
-        #                     endpoint[key]
-        #                 )
-        #                 setattr(component, key, value)
-        #                 setattr(component, 'auth_scheme', self.app.config.get('marklogic', 'auth'))
-        #             else:
-        #                 setattr(component, key, endpoint[key])
-        #     all_endpoints.append(component)
+        for endpoint in endpoint_config['endpoints']['global']:
+            module = import_module('mlmonitor.core.stats.marklogic')
+            component = getattr(module, endpoint['component'])()
+            for key in endpoint.keys():
+                if key != 'component':
+                    if key == 'url':
+                        value = '{0}://{1}:{2}@{3}:{4}{5}'.format(
+                            self.app.config.get('marklogic', 'scheme'),
+                            self.app.config.get('marklogic', 'user'),
+                            self.app.config.get('marklogic', 'pass'),
+                            self.app.config.get('marklogic', 'host'),
+                            self.app.config.get('marklogic', 'port'),
+                            endpoint[key]
+                        )
+                        setattr(component, key, value)
+                        setattr(component, 'auth_scheme', self.app.config.get('marklogic', 'auth'))
+                    else:
+                        setattr(component, key, endpoint[key])
+            all_endpoints.append(component)
 
         for endpoint in endpoint_config['endpoints']['configurable']:
             module = import_module('mlmonitor.core.stats.marklogic')
 
-            #TODO: This assumes that every templated endpoint is going to have a property called "name" that is templated.  Not sure if that is valid in the long run
+            # TODO: This assumes that every templated endpoint is going to have a property called "name" that is templated.  Not sure if that is valid in the long run
             for asset in self.find_assets(endpoint['name']):
                 component = getattr(module, endpoint['component'])()
                 # Assets are individual forest, database, server, group or hosts defined in the user configuration
@@ -95,7 +97,6 @@ class MLMonitorBaseController(ArgparseController):
 
         return all_endpoints
 
-
     def find_assets(self, string):
         pattern = '\[(\w+)\]'
         template = re.compile(pattern, re.UNICODE)
@@ -106,11 +107,11 @@ class MLMonitorBaseController(ArgparseController):
             return []
 
     def replace_config_values(self, string_to_alter, string_to_add):
-        #Config values can be colon delimited.  If so, make sure we're replacing with each value
+        # Config values can be colon delimited.  If so, make sure we're replacing with each value
         value_set = string_to_add.split(":")
         pattern = '\[\w+\]'
         matches = re.findall(pattern, string_to_alter)
         for index, value in enumerate(value_set):
             if len(matches) > index:
-                string_to_alter = string_to_alter.replace(matches[index],value)
+                string_to_alter = string_to_alter.replace(matches[index], value)
         return string_to_alter
