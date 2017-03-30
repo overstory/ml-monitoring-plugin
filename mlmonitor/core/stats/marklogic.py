@@ -13,10 +13,10 @@ def generate_statistic_objects(prefix, dictionary, list_of_stats):
 
     if isinstance(dictionary, list) and isinstance(dictionary[0], dict):
         generate_statistic_objects(prefix, dictionary[0], list_of_stats)
-    elif 'stand-id' in dictionary.keys():
+    elif hasattr(dictionary, 'keys') and 'stand-id' in dictionary.keys():
         stand_id = dictionary.pop('stand-id', None)[0]
         generate_statistic_objects(prefix + "." + stand_id, dictionary, list_of_stats)
-    else:
+    elif hasattr(dictionary, 'keys'):
         for key, value in dictionary.items():
             if (prefix):
                 new_prefix = prefix + "." + key

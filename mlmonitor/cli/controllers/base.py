@@ -103,7 +103,7 @@ class MLMonitorBaseController(ArgparseController):
         pattern = '\[(\w+)\]'
         template = re.compile(pattern, re.UNICODE)
         match = template.search(string)
-        if match:
+        if match and self.app.config.get('plugin', match.group(1)) != '':
             return self.app.config.get('plugin', match.group(1)).split(' ')
         else:
             return []
