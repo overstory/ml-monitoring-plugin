@@ -26,10 +26,13 @@ import json
 import logging
 import re
 import time
-
-from mlmonitor.core.marklogic.marklogic_status import MarkLogicStatus
+import traceback
 
 __version__ = '0.3'
+
+from mlmonitor.core.utils import newrelic_utils
+from mlmonitor.core.marklogic.marklogic_status import MarkLogicStatus
+
 log = logging.getLogger('cement:app:mlmonitor')
 
 
@@ -65,14 +68,15 @@ class RunPlugin:
         self.plugin_servers_summary_status = config.getboolean('plugin', 'servers_summary_status')
         self.plugin_servers = config.get('plugin', 'servers')
 
-
     def run(self):
-        log.info("newrelic_marklogic plugin now sending statuses to NewRelic Plugin API (to see more log messages change level=debug).")
+        log.info(
+            "newrelic_marklogic plugin now sending statuses to NewRelic Plugin API (to see more log messages change level=debug).")
         while True:
             try:
                 self.statusUpdate()
             except Exception as e:
                 log.error(e)
+                traceback.print_exc()
             time.sleep(self.plugin_duration)
 
     def statusUpdate(self):
@@ -206,11 +210,12 @@ class RunPlugin:
                 database_status = status.get(resource="databases", name=db)
                 database_detail = database_status["database-status"]["status-properties"]
                 for dd in database_detail:
-                    units=None
+                    units = None
                     if "units" in database_detail[dd]:
                         units = database_detail[dd]["units"]
                     if dd == "load-properties":
-                        database_load_details = database_status["database-status"]["status-properties"]["load-properties"]["load-detail"]
+                        database_load_details = \
+                        database_status["database-status"]["status-properties"]["load-properties"]["load-detail"]
                         for dld in database_load_details:
                             load_units = None
                             if "units" in database_load_details[dld]:
@@ -221,7 +226,8 @@ class RunPlugin:
                                 metrics["Component/databases/" + db + "/load/" + dld + "[" + load_units + "]"] = \
                                     database_load_details[dld]["value"]
                     elif dd == "rate-properties":
-                        database_rate_details = database_status["database-status"]["status-properties"]["rate-properties"]["rate-detail"]
+                        database_rate_details = \
+                        database_status["database-status"]["status-properties"]["rate-properties"]["rate-detail"]
                         for drd in database_rate_details:
                             rate_units = None
                             if "units" in database_rate_details[drd]:
@@ -233,7 +239,7 @@ class RunPlugin:
                                     database_rate_details[drd]["value"]
                     elif dd == "cache-properties":
                         database_cache_details = \
-                        database_status["database-status"]["status-properties"]["cache-properties"]
+                            database_status["database-status"]["status-properties"]["cache-properties"]
                         for dcd in database_cache_details:
                             cache_units = None
                             if "units" in database_cache_details[dcd]:
@@ -255,14 +261,14 @@ class RunPlugin:
 
         # retrieve specific host detail status
         if self.plugin_hosts:
-            metrics.update(self.getHostDetailStatus(status,self.plugin_hosts))
+            metrics.update(self.getHostDetailStatus(status, self.plugin_hosts))
         # retrieve specific forest detail status
         if self.plugin_forests:
-            metrics.update(self.getForestDetailStatus(status,self.plugin_forests))
+            metrics.update(self.getForestDetailStatus(status, self.plugin_forests))
 
         # retrieve specific group detail status
         if self.plugin_groups:
-            metrics.update(self.getGroupDetailStatus(status,self.plugin_groups))
+            metrics.update(self.getGroupDetailStatus(status, self.plugin_groups))
 
         # retrieve specific server detail status
         if self.plugin_servers:
@@ -284,8 +290,8 @@ class RunPlugin:
         else:
             log.debug("update status: " + json.dumps(update_newrelic))
 
-    def getHostDetailStatus(self,status,hosts):
-        metrics={}
+    def getHostDetailStatus(self, status, hosts):
+        metrics = {}
         for host in re.split(" ", hosts):
             host_status = status.get(resource="hosts", name=host)
             host_detail = host_status["host-status"]["status-properties"]
@@ -331,11 +337,11 @@ class RunPlugin:
                             metrics["Component/hosts/" + host + "/" + hsd] = host_detail["status-detail"][hsd]
                         else:
                             metrics["Component/hosts/" + host + "/" + hsd + "[" + units + "]"] = \
-                            host_status_detail[hsd]["value"]
+                                host_status_detail[hsd]["value"]
             return metrics
 
-    def getForestDetailStatus(self,status,forests):
-        metrics={}
+    def getForestDetailStatus(self, status, forests):
+        metrics = {}
         for forest in re.split(" ", forests):
             forest_status = status.get(resource="forests", name=forest)
             forest_detail = forest_status["forest-status"]["status-properties"]
@@ -374,7 +380,7 @@ class RunPlugin:
                     log.debug("ignoring group " + gd)
             return metrics
 
-    def getServerDetailStatus(self,status,servers):
+    def getServerDetailStatus(self, status, servers):
         metrics = {}
         for servergroup in re.split(" ", servers):
             s = servergroup.split(":")
@@ -384,7 +390,7 @@ class RunPlugin:
                 server_status = status.get(resource="servers", name=server, group=group)
                 server_detail = server_status["server-status"]["status-properties"]
                 for sd in server_detail:
-                    units=None
+                    units = None
                     try:
                         if "units" in server_detail[sd]:
                             units = server_detail[sd]["units"]
