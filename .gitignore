@@ -65,3 +65,4 @@ mlconfig.json
 .python-version
 /venv
 .DS_Store
+/config/mlmonitor-local.conf

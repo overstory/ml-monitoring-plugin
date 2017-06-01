@@ -349,10 +349,8 @@ class RunPlugin:
                 units = None
                 if "units" in forest_detail[fd]:
                     units = forest_detail[fd]["units"]
-                if re.match("license-key-options", fd):
+                if re.match("license-key-options|unclosed-stands|stands", fd):
                     log.debug("ignoring " + fd)
-                elif fd == "stands":
-                    log.debug("ignoring forest stands")
                 elif not units:
                     metrics["Component/forests/" + forest + "/" + fd] = forest_detail[fd]
                 else:
