@@ -40,7 +40,7 @@ class MLMonitorBaseController(ArgparseController):
                                                 version=mlmonitor.__version__,
                                                 name=self.app.config.get('newrelic', 'component_name'),
                                                 guid=self.app.config.get('newrelic', 'guid'),
-                                                duration=self.app.config.get('plugin', 'duration'),
+                                                duration=int(self.app.config.get('plugin', 'duration')),
                                                 metrics=metrics,
                                                 key=self.app.config.get('newrelic', 'key'),
                                                 proxy=self.app.config.get('plugin', 'http_proxy'))
