@@ -1,4 +1,6 @@
 """MarkLogic Monitoring Plugin main application entry point."""
+import platform
+
 from cement.core.exc import FrameworkError, CaughtSignal
 from cement.core.foundation import CementApp
 from cement.ext.ext_logging import LoggingLogHandler
@@ -49,7 +51,8 @@ class MLMonitorApp(CementApp):
             '~/.mlmonitor/application.conf',
             '../../config/mlmonitor.conf'
         ]
-        extensions = ['daemon']
+        if not platform.system().lower() in ['windows']:
+            extensions = ['daemon']
         log_handler = 'mlmonitor_logger'
         handlers = [
             CustomLogHandler
@@ -94,7 +97,8 @@ app = MLMonitorApp()
 def main():
     with app:
         try:
-            app.daemonize()
+            if not platform.system().lower() in ['windows']:
+                app.daemonize()
             app.args.add_argument('-c', action='store', dest='config', help='Location of config file to parse')
             app.run()
 
