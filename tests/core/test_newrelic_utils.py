@@ -18,7 +18,7 @@
 #
 
 # This is here to deal with a bug in in PyCharm 2016.3.  Can be removed/ignored as needed.
-from __future__ import absolute_import
+#from __future__ import absolute_import
 
 import logging
 import unittest

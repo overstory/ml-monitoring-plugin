@@ -6,6 +6,7 @@ from bottle import response, Bottle
 from mlmonitor.core.stats.marklogic import JsonRestStatSet
 from mlmonitor.core.stats.base import STATISTIC_UNITS_TO_IGNORE, StatisticType
 from tests.core.base import requires_http_server
+import tests
 
 
 class MarkLogicStatsCase(TestCase):
@@ -18,8 +19,7 @@ class MarkLogicStatsCase(TestCase):
         @self.app.route('/forest/status')
         def forest_status():
             response.set_header('Content-Type', 'application/json')
-            with open(os.path.dirname(
-                    os.path.realpath('__file__')) + '/resources/sample_forest_status_payload.json') as datafile:
+            with open(os.path.dirname(tests.__file__) + '/resources/sample_forest_status_payload.json') as datafile:
                 payload = datafile.read().replace('\n', '')
             return payload
 
@@ -51,8 +51,7 @@ class MarkLogicStatsCase(TestCase):
         @self.app.route('/server/status')
         def server_status():
             response.set_header('Content-Type', 'application/json')
-            with open(os.path.dirname(
-                    os.path.realpath('__file__')) + '/resources/sample_server_status_payload.json') as datafile:
+            with open(os.path.dirname(tests.__file__) + '/resources/sample_server_status_payload.json') as datafile:
                 payload = datafile.read().replace('\n', '')
             return payload
 
