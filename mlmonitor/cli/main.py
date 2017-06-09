@@ -40,7 +40,9 @@ class CustomLogHandler(LoggingLogHandler):
 def reload_commandline_config(app):
     if (app.pargs.config):
         app.config.parse_file(app.pargs.config)
-    pass
+    # Daemonize here.  Need to be able to get location of pid file after command line config has been loaded
+    if not platform.system().lower() in ['windows']:
+        app.daemonize()
 
 
 class MLMonitorApp(CementApp):
@@ -97,8 +99,6 @@ app = MLMonitorApp()
 def main():
     with app:
         try:
-            if not platform.system().lower() in ['windows']:
-                app.daemonize()
             app.args.add_argument('-c', action='store', dest='config', help='Location of config file to parse')
             app.run()
 
