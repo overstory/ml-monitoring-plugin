@@ -13,6 +13,10 @@ endpoints:
       component: JsonRestStatSet
       name: server.all.status
       url: /manage/v2/servers?view=status&format=json
+    -
+      component: JsonRestStatSet
+      name: cluster.status
+      url: /manage/v2?view=status&format=json
   configurable:
     -
       component: JsonRestStatSet

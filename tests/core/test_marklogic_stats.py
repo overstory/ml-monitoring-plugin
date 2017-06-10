@@ -44,8 +44,6 @@ class MarkLogicStatsCase(TestCase):
             else:
                 self.assertTrue(stat.statsd().endswith('g'))
 
-
-
     @requires_http_server(app, host, port)
     def test_stat_with_nested_payload(self):
         @self.app.route('/server/status')
@@ -68,3 +66,28 @@ class MarkLogicStatsCase(TestCase):
         self.assertEquals(server_stat_set.stats[0].name, 'server-status.static-expires')
         self.assertEquals(server_stat_set.stats[0].unit, 'quantity')
         self.assertEquals(server_stat_set.stats[0].value, 3600)
+
+    @requires_http_server(app, host, port)
+    def test_stat_with_flat_payload(self):
+        @self.app.route('/cluster/status')
+        def server_status():
+            response.set_header('Content-Type', 'application/json')
+            with open(os.path.dirname(tests.__file__) + '/resources/sample_cluster_status_payload.json') as datafile:
+                payload = datafile.read().replace('\n', '')
+            return payload
+
+        name = 'cluster-status'
+        url = 'http://{0}:{1}/cluster/status'.format(self.host, self.port)
+
+        server_stat_set = JsonRestStatSet(name, url)
+        server_stat_set.calculate()
+
+        self.assertEquals(server_stat_set.name, name)
+        self.assertEquals(server_stat_set.url, url)
+
+        # Looking for total-cpu stats
+        had_total_cpu_stats = False
+        for i in server_stat_set.stats:
+            if 'total-cpu' in i.name :
+                had_total_cpu_stats = True
+        self.assertTrue(had_total_cpu_stats, "Did not find a SimpleStat object with total-cpu")
