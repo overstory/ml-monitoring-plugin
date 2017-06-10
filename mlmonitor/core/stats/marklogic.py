@@ -31,7 +31,7 @@ def generate_statistic_objects(prefix, dictionary, list_of_stats):
                     log.debug("Adding SimpleStatistic: " + stat.__str__())
                     list_of_stats.append(stat)
                 elif dictionary.get('units', None) is None and 'total-cpu' in new_prefix:
-                    stat = SimpleStatistic(new_prefix, value, '%')
+                    stat = SimpleStatistic(new_prefix, value, 'percent')
                     log.debug("Adding SimpleStatistic: " + stat.__str__())
                     list_of_stats.append(stat)
 
