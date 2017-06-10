@@ -6,6 +6,7 @@ from bottle import response, Bottle
 from mlmonitor.core.stats.marklogic import JsonRestStatSet
 from mlmonitor.core.stats.base import STATISTIC_UNITS_TO_IGNORE, StatisticType
 from tests.core.base import requires_http_server
+import tests
 
 
 class MarkLogicStatsCase(TestCase):
@@ -18,8 +19,7 @@ class MarkLogicStatsCase(TestCase):
         @self.app.route('/forest/status')
         def forest_status():
             response.set_header('Content-Type', 'application/json')
-            with open(os.path.dirname(
-                    os.path.realpath('__file__')) + '/resources/sample_forest_status_payload.json') as datafile:
+            with open(os.path.dirname(tests.__file__) + '/resources/sample_forest_status_payload.json') as datafile:
                 payload = datafile.read().replace('\n', '')
             return payload
 
@@ -44,15 +44,12 @@ class MarkLogicStatsCase(TestCase):
             else:
                 self.assertTrue(stat.statsd().endswith('g'))
 
-
-
     @requires_http_server(app, host, port)
     def test_stat_with_nested_payload(self):
         @self.app.route('/server/status')
         def server_status():
             response.set_header('Content-Type', 'application/json')
-            with open(os.path.dirname(
-                    os.path.realpath('__file__')) + '/resources/sample_server_status_payload.json') as datafile:
+            with open(os.path.dirname(tests.__file__) + '/resources/sample_server_status_payload.json') as datafile:
                 payload = datafile.read().replace('\n', '')
             return payload
 
@@ -69,3 +66,53 @@ class MarkLogicStatsCase(TestCase):
         self.assertEquals(server_stat_set.stats[0].name, 'server-status.static-expires')
         self.assertEquals(server_stat_set.stats[0].unit, 'quantity')
         self.assertEquals(server_stat_set.stats[0].value, 3600)
+
+    @requires_http_server(app, host, port)
+    def test_stat_with_flat_payload(self):
+        @self.app.route('/host/status')
+        def server_status():
+            response.set_header('Content-Type', 'application/json')
+            with open(os.path.dirname(tests.__file__) + '/resources/sample_host_status_payload.json') as datafile:
+                payload = datafile.read().replace('\n', '')
+            return payload
+
+        name = 'host-status'
+        url = 'http://{0}:{1}/host/status'.format(self.host, self.port)
+
+        server_stat_set = JsonRestStatSet(name, url)
+        server_stat_set.calculate()
+
+        self.assertEquals(server_stat_set.name, name)
+        self.assertEquals(server_stat_set.url, url)
+
+        # Looking for total-cpu stats
+        had_total_cpu_stats = False
+        for i in server_stat_set.stats:
+            if 'total-cpu' in i.name :
+                had_total_cpu_stats = True
+        self.assertTrue(had_total_cpu_stats, "Did not find a SimpleStat object with total-cpu")
+
+    @requires_http_server(app, host, port)
+    def test_stat_with_median_scores(self):
+        @self.app.route('/host/cluster')
+        def server_status():
+            response.set_header('Content-Type', 'application/json')
+            with open(os.path.dirname(tests.__file__) + '/resources/sample_cluster_status_payload.json') as datafile:
+                payload = datafile.read().replace('\n', '')
+            return payload
+
+        name = 'host-status'
+        url = 'http://{0}:{1}/host/cluster'.format(self.host, self.port)
+
+        server_stat_set = JsonRestStatSet(name, url)
+        server_stat_set.calculate()
+
+        self.assertEquals(server_stat_set.name, name)
+        self.assertEquals(server_stat_set.url, url)
+
+        # Looking for status with median
+        had_median = False
+        for i in server_stat_set.stats:
+            if 'median-seconds' in i.name:
+                had_total_cpu_stats = True
+        self.assertTrue(had_total_cpu_stats, "Did not find a SimpleStat object with median stat")

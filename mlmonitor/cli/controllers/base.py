@@ -10,8 +10,8 @@ import yaml
 import mlmonitor
 from cement.ext.ext_argparse import ArgparseController, expose
 
+from core.utils.newrelic_utils import NewRelicUtility
 from mlmonitor.core.utils.statsd_utils import StatsdUtility
-from mlmonitor.core import RunPlugin
 
 
 class MLMonitorBaseController(ArgparseController):
@@ -26,8 +26,29 @@ class MLMonitorBaseController(ArgparseController):
 
     @expose(help="Starts up process to send status update from MarkLogic to New Relic")
     def newrelic(self):
-        plugin = RunPlugin(config=self.app.config)
-        plugin.run()
+        while True:
+            try:
+                stat_sets = self.create_stat_sets()
+                metrics = {}
+                for stat_set in stat_sets:
+                    stat_set.calculate()
+                    for stat in stat_set.stats:
+                        metrics.update(stat.newrelic())
+                NewRelicUtility.update_newrelic(self,
+                                                host=self.app.config.get('marklogic', 'host'),
+                                                pid=1,
+                                                version=mlmonitor.__version__,
+                                                name=self.app.config.get('newrelic', 'component_name'),
+                                                guid=self.app.config.get('newrelic', 'guid'),
+                                                duration=int(self.app.config.get('plugin', 'duration')),
+                                                metrics=metrics,
+                                                key=self.app.config.get('newrelic', 'key'),
+                                                proxy=self.app.config.get('plugin', 'http_proxy'))
+            except Exception as e:
+                self.app.log.error(e, __name__)
+                traceback.print_exc()
+            self.app.log.info('Waiting for {0} seconds...'.format(self.app.config.get('plugin', 'duration')))
+            time.sleep(int(self.app.config.get('plugin', 'duration')))
 
     @expose(help="Starts up process to send status update from MarkLogic to StatsD")
     def statsd(self):

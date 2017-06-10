@@ -18,8 +18,10 @@ class CoreStatsTest(TestCase):
         self.assertEquals(stat.value, value)
 
         datagram = "{0}:{1}|{2}".format(name, value, 'g')
+        nr_component_stat = {"Component/{0}[{1}]".format(name.replace(".", "/"), unit): value}
 
         self.assertEquals(datagram, stat.statsd())
+        self.assertEquals(nr_component_stat, stat.newrelic())
 
     def test_timer_stat(self):
         name = 'stat.timer'

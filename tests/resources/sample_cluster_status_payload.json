@@ -1,0 +1,440 @@
+{
+    "local-cluster-status": {
+        "id": "15143536378202995050",
+        "name": "f7fc0485ba3a-cluster",
+        "version": "8.0-6",
+        "effective-version": 8000600,
+        "role": "local",
+        "meta": {
+            "uri": "/manage/v2?view=status",
+            "current-time": "2017-06-10T02:58:58.572077Z",
+            "elapsed-time": {
+                "units": "sec",
+                "value": 0.03689
+            }
+        },
+        "status-relations": {
+            "hosts-status": {
+                "uriref": "/manage/v2/hosts?view=status",
+                "typeref": "hosts",
+                "hosts-status-summary": {
+                    "total-hosts": {
+                        "units": "quantity",
+                        "value": 1
+                    },
+                    "load-properties": {
+                        "total-load": {
+                            "units": "MB/sec",
+                            "value": 81.3631820678711
+                        },
+                        "load-detail": {
+                            "query-read-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "journal-write-load": {
+                                "units": "sec/sec",
+                                "value": 0.00805074907839298
+                            },
+                            "save-write-load": {
+                                "units": "sec/sec",
+                                "value": 0.00463916687294841
+                            },
+                            "merge-read-load": {
+                                "units": "sec/sec",
+                                "value": 0.0160247907042503
+                            },
+                            "merge-write-load": {
+                                "units": "sec/sec",
+                                "value": 0.0566916093230248
+                            },
+                            "backup-read-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "backup-write-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "restore-read-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "restore-write-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "large-read-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "large-write-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "external-binary-read-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "xdqp-client-receive-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "xdqp-client-send-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "xdqp-server-receive-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "xdqp-server-send-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "foreign-xdqp-client-receive-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "foreign-xdqp-client-send-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "foreign-xdqp-server-receive-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "foreign-xdqp-server-send-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "read-lock-wait-load": {
+                                "units": "sec/sec",
+                                "value": 0
+                            },
+                            "read-lock-hold-load": {
+                                "units": "sec/sec",
+                                "value": 7.11048698425293
+                            },
+                            "write-lock-wait-load": {
+                                "units": "sec/sec",
+                                "value": 21.4383106231689
+                            },
+                            "write-lock-hold-load": {
+                                "units": "sec/sec",
+                                "value": 47.0043907165527
+                            },
+                            "deadlock-wait-load": {
+                                "units": "sec/sec",
+                                "value": 5.72458600997925
+                            }
+                        }
+                    },
+                    "rate-properties": {
+                        "total-rate": {
+                            "units": "MB/sec",
+                            "value": 7093.83544921875
+                        },
+                        "rate-detail": {
+                            "memory-process-swap-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "memory-system-pagein-rate": {
+                                "units": "MB/sec",
+                                "value": 2265.5
+                            },
+                            "memory-system-pageout-rate": {
+                                "units": "MB/sec",
+                                "value": 4790.89013671875
+                            },
+                            "memory-system-swapin-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "memory-system-swapout-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "query-read-rate": {
+                                "units": "MB/sec",
+                                "value": 0.00917147472500801
+                            },
+                            "journal-write-rate": {
+                                "units": "MB/sec",
+                                "value": 0.447053790092468
+                            },
+                            "save-write-rate": {
+                                "units": "MB/sec",
+                                "value": 1.19168901443481
+                            },
+                            "merge-read-rate": {
+                                "units": "MB/sec",
+                                "value": 18.1668605804443
+                            },
+                            "merge-write-rate": {
+                                "units": "MB/sec",
+                                "value": 17.629810333252
+                            },
+                            "backup-read-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "backup-write-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "restore-read-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "restore-write-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "large-read-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "large-write-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "external-binary-read-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "xdqp-client-receive-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "xdqp-client-send-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "xdqp-server-receive-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "xdqp-server-send-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "foreign-xdqp-client-receive-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "foreign-xdqp-client-send-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "foreign-xdqp-server-receive-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "foreign-xdqp-server-send-rate": {
+                                "units": "MB/sec",
+                                "value": 0
+                            },
+                            "read-lock-rate": {
+                                "units": "locks/sec",
+                                "value": 11.5987300872803
+                            },
+                            "write-lock-rate": {
+                                "units": "locks/sec",
+                                "value": 71.8446578979492
+                            },
+                            "deadlock-rate": {
+                                "units": "locks/sec",
+                                "value": 0.632166624069214
+                            }
+                        }
+                    }
+                }
+            },
+            "servers-status": {
+                "uriref": "/manage/v2/servers?view=status",
+                "typeref": "servers",
+                "servers-status-summary": {
+                    "request-rate": {
+                        "units": "quantity/sec",
+                        "value": 1.27999997138977
+                    },
+                    "expanded-tree-cache-miss-rate": {
+                        "units": "misses/sec",
+                        "value": 5.3899998664856
+                    },
+                    "expanded-tree-cache-hit-rate": {
+                        "units": "hits/sec",
+                        "value": 0
+                    },
+                    "request-count": {
+                        "units": "quantity",
+                        "value": 33
+                    }
+                }
+            },
+            "forests-status": {
+                "uriref": "/manage/v2/forests?view=status",
+                "typeref": "forests",
+                "forests-status-summary": {
+                    "total-forests": {
+                        "units": "quantity",
+                        "value": 12
+                    },
+                    "state-not-open": {
+                        "units": "quantity",
+                        "value": 0
+                    },
+                    "max-stands-per-forest": {
+                        "units": "quantity",
+                        "value": 5
+                    },
+                    "merge-count": {
+                        "units": "quantity",
+                        "value": 0
+                    },
+                    "backup-count": {
+                        "units": "quantity",
+                        "value": 0
+                    },
+                    "restore-count": {
+                        "units": "quantity",
+                        "value": 0
+                    },
+                    "cache-properties": {
+                        "list-cache-hit-rate": {
+                            "units": "hits/sec",
+                            "value": 15.8999996185303
+                        },
+                        "list-cache-miss-rate": {
+                            "units": "misses/sec",
+                            "value": 0
+                        },
+                        "triple-cache-hit-rate": {
+                            "units": "hits/sec",
+                            "value": 0
+                        },
+                        "triple-cache-miss-rate": {
+                            "units": "misses/sec",
+                            "value": 0
+                        },
+                        "triple-value-cache-hit-rate": {
+                            "units": "hits/sec",
+                            "value": 0
+                        },
+                        "triple-value-cache-miss-rate": {
+                            "units": "misses/sec",
+                            "value": 0
+                        },
+                        "compressed-tree-cache-hit-rate": {
+                            "units": "hits/sec",
+                            "value": 1.85000002384186
+                        },
+                        "compressed-tree-cache-miss-rate": {
+                            "units": "misses/sec",
+                            "value": 0.150000005960464
+                        },
+                        "list-cache-ratio": {
+                            "units": "%",
+                            "value": "100"
+                        },
+                        "compressed-tree-cache-ratio": {
+                            "units": "%",
+                            "value": "94"
+                        },
+                        "large-binary-cache-hit-rate": {
+                            "units": "hits/sec",
+                            "value": 0
+                        },
+                        "large-binary-cache-miss-rate": {
+                            "units": "misses/sec",
+                            "value": 0
+                        }
+                    }
+                }
+            },
+            "requests-status": {
+                "uriref": "/manage/v2/requests",
+                "typeref": "requests",
+                "requests-status-summary": {
+                    "max-seconds": {
+                        "units": "sec",
+                        "value": 117.376083
+                    },
+                    "ninetieth-percentile-seconds": {
+                        "units": "sec",
+                        "value": 90.017153
+                    },
+                    "median-seconds": {
+                        "units": "sec",
+                        "value": 24.848928
+                    },
+                    "mean-seconds": {
+                        "units": "sec",
+                        "value": 34.878227
+                    },
+                    "standard-dev-seconds": {
+                        "units": "sec",
+                        "value": 32.6114
+                    },
+                    "min-seconds": {
+                        "units": "sec",
+                        "value": 0.060742
+                    },
+                    "total-requests": {
+                        "units": "quantity",
+                        "value": 33
+                    },
+                    "update-count": {
+                        "units": "quantity",
+                        "value": 31
+                    },
+                    "query-count": {
+                        "units": "quantity",
+                        "value": 2
+                    }
+                }
+            },
+            "transactions-status": {
+                "uriref": "/manage/v2/transactions",
+                "typeref": "transactions",
+                "transactions-status-summary": {
+                    "max-seconds": {
+                        "units": "sec",
+                        "value": 69.60752
+                    },
+                    "ninetieth-percentile-seconds": {
+                        "units": "sec",
+                        "value": 34.60752
+                    },
+                    "mean-seconds": {
+                        "units": "sec",
+                        "value": 18.5741866666667
+                    },
+                    "standard-dev-seconds": {
+                        "units": "sec",
+                        "value": 15.1532
+                    },
+                    "min-seconds": {
+                        "units": "sec",
+                        "value": 0.60752
+                    },
+                    "total-transactions": {
+                        "units": "quantity",
+                        "value": 30
+                    }
+                }
+            }
+        },
+        "related-views": {
+            "related-view": [
+                {
+                    "view-type": "item",
+                    "view-name": "default",
+                    "view-uri": "/manage/v2/clusters/f7fc0485ba3a-cluster"
+                }
+            ]
+        }
+    }
+}

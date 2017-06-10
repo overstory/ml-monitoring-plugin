@@ -47,7 +47,11 @@ class SimpleStatistic(BaseStatistic):
         return "{0}: {1} {2}".format(self.name, self.value, self.unit)
 
     def newrelic(self):
-        raise NotImplementedError
+        if self.stat_type == StatisticType.timer:
+            value = isodate.parse_duration(self.value).total_seconds()
+        else:
+            value = self.value
+        return {"Component/{0}[{1}]".format(self.name.replace(".", "/"), self.unit):value}
 
     def statsd(self):
         if self.stat_type == StatisticType.timer:
