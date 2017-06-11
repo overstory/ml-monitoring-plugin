@@ -5,11 +5,12 @@ Universal monitoring plugin that supports multiple statistics backends. Heavily 
 Features
 -
 
--  Easy to install as pip or rpm
--  Configurable selection of metrics to retrieve
+-  Built on the [Cement Framework](http://builtoncement.com) for command line tools.
+-  Easy to install as pip or rpm.
+-  Configurable selection of metrics to retrieve.
 -  Retrieve summary metrics on local cluster, hosts, servers & forests.
 -  Retrieve detail metrics on databases, forests, hosts, groups & servers.
--  Default dashboard on New Relic, focusing on Speed, IO, Locks and Storage
+-  Default dashboard on New Relic, focusing on Speed, IO, Locks and Storage.
 
 Requirements
 -
@@ -37,6 +38,11 @@ An rpm package can be built by running
     > python setup.py clean bdist_rpm
 
 
+Tests
+-
+
+Tests are designed and run with `nose2` but should be `unittest` and `nose` compliant. Please run tests from `tests` directory.
+    
 
 Installation 
 -
