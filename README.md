@@ -170,6 +170,7 @@ There are a set of configurations for defining which statuses are captured by Ne
 - servers (list of servers): retrieve server detailed status.
 
 
+
     [plugin]
     
     # Local cluster summary.
