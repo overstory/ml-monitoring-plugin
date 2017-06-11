@@ -169,7 +169,7 @@ There are a set of configurations for defining which statuses are captured by Ne
 - servers_summary_status (True|False): retrieve summary of all servers status.
 - servers (list of servers): retrieve server detailed status.
 
-
+Example
 
     [plugin]
     
