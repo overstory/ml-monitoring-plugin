@@ -155,7 +155,7 @@ a StatsD listener via the ``statsd`` subcommand.
     port = 8125
 
 
-The 'plugin' section defines sample period for updating NewRelic, as well as the logging level for emitting messages about plugin operation.
+The 'plugin' section defines sample period for updating your statistics backend, as well as the logging level for emitting messages about plugin operation.
 
 There are a set of configurations for defining which statuses are captured by NewRelic, summarised below.
 
@@ -200,7 +200,19 @@ Example
     # Server(s) detail status (must supply group name ex. ServerName:GroupName), space delimited
     servers=<APP SERVER NAMES>
     
+The following configurations can also be used to change the sampling rate, add HTTP proxy support if required or change
+the debugging level of the output.
 
+    [plugin]
+    
+    # Proxy (ex. http://10.10.1.10:3128).
+    http_proxy =
+    
+    # Sample period in seconds.
+    duration = 60
+    
+    # Set logging level (INFO|DEBUG|ERROR).
+    log_level = DEBUG
 
 
 Copyright & License
