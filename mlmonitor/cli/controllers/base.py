@@ -10,7 +10,7 @@ import yaml
 import mlmonitor
 from cement.ext.ext_argparse import ArgparseController, expose
 
-from core.utils.newrelic_utils import NewRelicUtility
+from mlmonitor.core.utils.newrelic_utils import NewRelicUtility
 from mlmonitor.core.utils.statsd_utils import StatsdUtility
 
 
