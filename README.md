@@ -47,7 +47,8 @@ Tests are designed and run with `nose2` but should be `unittest` and `nose` comp
 Installation 
 -
 
-Installation is supported from a locally accessible version of a build (support from PyPI is coming soon).  
+Installation is supported from a locally accessible version of a build (support from PyPI is coming soon). You can download the
+latest release [here](https://github.com/overstory/ml-monitoring-plugin/releases/download/0.3/mlmonitor-0.3-py2.py3-none-any.whl).
 
 From a python package:
 
